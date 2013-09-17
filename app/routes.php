@@ -72,4 +72,14 @@ Route::group(['before' => 'auth'], function() { // group filter to check user is
 
 Route::resource('admin/usergroup', 'UserGroupController');
 
+/*-----COMPOSERS ------*/
+
+View::composer('admin.partials.users.widget',function($view)
+{
+	$users = User::where('activated', '=', '1')->get();
+	$data = array('active'=>$users);
+	$view->with($data);
+});
+
+
 

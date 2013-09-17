@@ -52,7 +52,16 @@ class UserGroupController extends BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		try
+		{
+			$usergroup = Sentry::findGroupById($id);
+			return View::make('admin.usergroups.edit', compact('usergroup'));
+		}
+		catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+		{
+			echo 'Group was not found.';
+		}
+		
 	}
 
 	/**
@@ -63,7 +72,36 @@ class UserGroupController extends BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		try
+		{
+			// Find the group using the group id
+			$group = Sentry::findGroupById($id);
+		
+			// Update the group details
+			$group->name = Input::get('name');
+			$group->permissions = array(
+					'admin' => 1,
+					'users' => 1,
+			);
+		
+			// Update the group
+			if ($group->save())
+			{
+				return Redirect::to('admin/usergroup');
+			}
+			else
+			{
+				// Group information was not updated
+			}
+		}
+		catch (Cartalyst\Sentry\Groups\GroupExistsException $e)
+		{
+			echo 'Group already exists.';
+		}
+		catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+		{
+			echo 'Group was not found.';
+		}
 	}
 
 	/**
