@@ -30,7 +30,9 @@
 		  <li class="">{{link_to('admin/user','View all users')}}</li>
 		  <li>{{link_to('admin/user/create','Create user')}}</li>
 		  <li>{{link_to('admin/user/finduser','Find users')}}</li>		  
-		  
+		  <li class="nav-header">User Groups</li>
+		  <li class="">{{link_to('admin/usergroup','View all user groups')}}</li>
+		  <li>{{link_to('admin/usergroup/create','Create user groups')}}</li>
 		</ul>
       </div>
       

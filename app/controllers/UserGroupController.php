@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Redirect;
+
 class UserGroupController extends BaseController {
 
 	/**
@@ -30,7 +32,26 @@ class UserGroupController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		try
+		{
+			// Create the group
+			$group = Sentry::createGroup(array(
+					'name'        => Input::get('name'),
+					'permissions' => array(
+							'admin' => 1
+					),
+			));
+			
+			return Redirect::to('admin/usergroup');
+		}
+		catch (Cartalyst\Sentry\Groups\NameRequiredException $e)
+		{
+			echo 'Name field is required';
+		}
+		catch (Cartalyst\Sentry\Groups\GroupExistsException $e)
+		{
+			echo 'Group already exists';
+		}
 	}
 
 	/**
@@ -41,7 +62,9 @@ class UserGroupController extends BaseController {
 	 */
 	public function show($id)
 	{
-		//
+ 		$usergroup = Sentry::findGroupById($id);
+
+ 		return View::make('admin.usergroups.show', compact('usergroup'));
 	}
 
 	/**
@@ -112,7 +135,18 @@ class UserGroupController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		try
+		{
+			// Find the group using the group id
+			$group = Sentry::findGroupById($id);		
+			// Delete the group
+			$group->delete();
+			return Redirect::to('admin/usergroup');
+		}
+		catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+		{
+			echo 'Group was not found.';
+		}
 	}
 
 }

@@ -20,6 +20,15 @@ Route::filter('auth', function()
 		return Redirect::to('/login');
 });
 
+Route::filter('admin_auth', function()
+{
+	$user = Sentry::getUser();
+	if (!$user->hasAccess('admin'))
+	{
+		return Redirect::to('/login');
+	}
+});
+
 Route::get('logout', function()
 {
 	Sentry::logout();
@@ -58,7 +67,7 @@ Route::get('/login', function() //login form
 Route::get('admin/user/finduser','UserController@finduser'); //form to find a user
 Route::post('admin/user/search','UserController@search');
 
-Route::group(['before' => 'auth'], function() { // group filter to check user is logged in
+Route::group(['before' => 'admin_auth'], function() { // group filter to check user is logged in
 	Route::resource('admin/user', 'UserController',  array('before'=>'auth')); //all the user actions	
 	//routes to search for and find a user within the admin
 
