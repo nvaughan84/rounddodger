@@ -12,7 +12,7 @@
  <?php echo Form::text('name', Input::old('name')); ?><br>
  <!-- password field -->
  <?php echo Form::label('permissions', 'Permissions'); ?>
- <?php echo Form::password('permissions'); ?><br> 
+ <?php echo Form::text('permissions'); ?><br> 
  
  <!-- login button -->
  <?php echo Form::submit('create', array('class'=>'btn'));?>
