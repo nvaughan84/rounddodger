@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Redirect;
 |
 */
 
+//SUBDOMAIN ROUTING
+Route::group(array('domain' => '{account}.rounddodger.dev'), function()
+{
+
+	Route::get('user/{id}', function($account, $id)
+	{
+		echo $account;
+	});
+
+});
+
 //FILTERS
 Route::filter('auth', function()
 {
@@ -22,6 +33,10 @@ Route::filter('auth', function()
 
 Route::filter('admin_auth', function()
 {
+	if (!Sentry::check())
+	{
+		return Redirect::to('/login');
+	}
 	$user = Sentry::getUser();
 	if (!$user->hasAccess('admin'))
 	{

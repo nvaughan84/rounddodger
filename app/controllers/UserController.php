@@ -46,6 +46,7 @@ class UserController extends \BaseController {
 			$password = Input::get('password');
 			$first_name = Input::get('first_name');
 			$last_name = Input::get('last_name');
+			//$group = Input::get('group');
 			
 			$rules = array(
 					'username'=>'required|email',
@@ -113,8 +114,9 @@ class UserController extends \BaseController {
 		try
 		{
 		    $user = Sentry::getUserProvider()->findById($id);
-		    //print_r($user);
-		    return View::make('admin.users.edit', compact('user'));
+		    $usergroups = UserGroup::all();
+		    
+		    return View::make('admin.users.edit', compact('user'), compact('usergroups'));
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
@@ -133,7 +135,7 @@ class UserController extends \BaseController {
 		$username = Input::get('username');
 		$first_name = Input::get('first_name');
 		$last_name = Input::get('last_name');
-		
+		$group = Input::get('group');
 		try
 		{
 			// Find the user using the user id
@@ -146,21 +148,25 @@ class UserController extends \BaseController {
 			// Update the user
 			if ($user->save())
 			{
+				$usergroup = Sentry::findGroupById($group);
+				$user->addGroup($usergroup);
 				return Redirect::to('admin/user');
 			}
 			else
 			{
-				// User information was not updated
+				$message = 'There was an error and the user wasn\'t updated';
 			}
 		}
 		catch (Cartalyst\Sentry\Users\UserExistsException $e)
 		{
-			echo 'User with this login already exists.';
+			$message = 'User with this login already exists.';
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
-			echo 'User was not found.';
+			$message = 'User was not found.';
 		}
+		$data = array('message'=>$message);
+		return Redirect::to('admin/user/edit/'.$id);
 	}
 	
 	public function finduser()
