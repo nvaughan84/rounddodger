@@ -54,7 +54,7 @@ Route::get('logout', function()
  * 
  */
 
-Route::group(['before' => 'auth'], function() {
+/*Route::group(['before' => 'auth'], function() {
 	Route::get('/', function()
 	{
 		return Redirect::to('/admin');
@@ -64,7 +64,7 @@ Route::group(['before' => 'auth'], function() {
 	{
 		return View::make('admin.index');
 	});
-});
+});*/
 
 
 
@@ -89,9 +89,18 @@ Route::post('admin/user/search','UserController@search');
 //});
 
 
-/*-----USERS GRUOPS ROUTES ------
+/*-----USERS GROUPS ROUTES ------
 * Contains all routes for user functions (e.g login, signup)
 * Also contains the routes for admin user functions (e.g admin/user/create)
 */
 
 Route::resource('admin/usergroup', 'UserGroupController');
+
+/*-----CALENDAR GROUPS ROUTES ------
+* Contains all routes for user functions (e.g login, signup)
+* Also contains the routes for admin user functions (e.g admin/user/create)
+*/
+
+Route::resource('admin/calendar/group', 'CalendarGroupController');
+
+

@@ -12,12 +12,28 @@ class DatabaseSeeder extends Seeder {
 		Eloquent::unguard();
 
 		// $this->call('UserTableSeeder');
-		$this->call('BlogsTableSeeder');
+		$this->call('CalendarGroupsTableSeeder');
 	}
 
 }
 
-class UserTableSeeder extends Seeder {
+class CalendarGroupsTableSeeder extends Seeder {
+
+	public function run()
+	{
+		// Uncomment the below to wipe the table clean before populating
+		// DB::table('blogs')->truncate();
+
+		$calendarGroups = array('name'=>'Year 7', 'description'=>'Year 7 events and activities');
+
+		// Uncomment the below to run the seeder
+		DB::table('calendar_groups')->insert($calendarGroups);
+	}
+
+}
+
+
+/*class UserTableSeeder extends Seeder {
 
 	public function run()
 	{
@@ -27,4 +43,4 @@ class UserTableSeeder extends Seeder {
 		$this->call('BlogsTableSeeder');
 	}
 
-}
+}*/

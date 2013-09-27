@@ -14,6 +14,7 @@
     <ul class="nav">
       <li>{{link_to('admin/user','Users')}}</li>      
       <li>{{link_to('admin/usergroup','User Groups')}}</li>
+      <li>{{link_to('admin/calendar/group','Calendar Groups')}}</li>
     </ul>
         <ul class="nav pull-right">
       <li>{{link_to('/logout','Logout')}}</li>

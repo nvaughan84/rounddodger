@@ -9,7 +9,8 @@ class CalendarGroupController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$calendargroups = CalendarGroup::all();
+		return View::make('admin.calendargroups.index', compact('calendargroups'));
 	}
 
 	/**
@@ -51,7 +52,8 @@ class CalendarGroupController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$calendargroup = CalendarGroup::find($id);
+		return View::make('admin.calendargroups.edit', compact('calendargroup'));
 	}
 
 	/**
