@@ -64,7 +64,17 @@ class CalendarGroupController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$calendargroup = CalendarGroup::find($id);
+
+		$name = Input::get('name');
+		$description = Input::get('description');
+
+		$calendargroup->name = $name;
+		$calendargroup->description = $description;
+
+		$calendargroup->save();
+
+		return Redirect::to('admin/calendar/group');
 	}
 
 	/**
