@@ -8,6 +8,20 @@
     <!-- Full Calendar and jQuery -->
     {{ HTML::style('css/fullcalendar/fullcalendar.css'); }}
     {{ HTML::style('css/fullcalendar/fullcalendar.print.css'); }}
+    {{ HTML::style('css/ui-lightness/jquery-ui-1.10.3.custom.min.css'); }}
+
+    <style>
+    #calendar {
+    width: 900px;
+    margin: 0 auto;
+    }
+    
+    .hover{background:#777;}
+    
+    #dialog label{width:80px; display:block; float:left}
+    select, option{width:140px;}
+
+</style>
 
   </head>
   <body>

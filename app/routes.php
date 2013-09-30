@@ -110,7 +110,8 @@ Route::resource('admin/calendar/group', 'CalendarGroupController');
 
 Route::get('admin/calendar', function()
 	{
-		return View::make('admin.calendar.calendar');
+		$calendargroups = CalendarGroup::all();
+		return View::make('admin.calendar.calendar', compact('calendargroups'));
 	});
 
 
