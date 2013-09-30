@@ -111,7 +111,18 @@ class CalendarGroupController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		echo 'destry';
+		$calendargroup = new CalendarGroup();
+		$calendargroup->find($id);
+
+		if($calendargroup->delete())
+		{
+			return Redirect::to('admin/calendar/group');
+		}
+		else
+		{
+			return Redirect::to('admin/calendar/group/edit/'.$id);
+		}
 	}
 
 }
