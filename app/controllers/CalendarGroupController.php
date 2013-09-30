@@ -67,7 +67,9 @@ class CalendarGroupController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$calendargroup = CalendarGroup::find($id);
+		
+		return View::make('admin.calendargroups.show', compact('calendargroup'));
 	}
 
 	/**
@@ -111,18 +113,12 @@ class CalendarGroupController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		echo 'destry';
-		$calendargroup = new CalendarGroup();
-		$calendargroup->find($id);
+		$calendargroup = CalendarGroup::find($id);
 
-		if($calendargroup->delete())
-		{
-			return Redirect::to('admin/calendar/group');
-		}
-		else
-		{
-			return Redirect::to('admin/calendar/group/edit/'.$id);
-		}
+		$calendargroup->delete();
+		
+		return Redirect::to('admin/calendar/group');
+		
 	}
 
 }
