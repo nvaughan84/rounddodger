@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     {{ HTML::style('css/bootstrap.min.css'); }}
+    <!-- Full Calendar and jQuery -->
+    {{ HTML::style('css/fullcalendar/fullcalendar.css'); }}
+    {{ HTML::style('css/fullcalendar/fullcalendar.print.css'); }}
+
   </head>
   <body>
   
@@ -12,9 +16,10 @@
   <div class="navbar-inner">
     <span class="brand">Admin</span>
     <ul class="nav">
-      <li>{{link_to('admin/user','Users')}}</li>      
-      <li>{{link_to('admin/usergroup','User Groups')}}</li>
+      <li>{{link_to('admin/calendar','Calendar')}}</li>
       <li>{{link_to('admin/calendar/group','Calendar Groups')}}</li>
+      <li>{{link_to('admin/user','Users')}}</li>      
+      <li>{{link_to('admin/usergroup','User Groups')}}</li>     
     </ul>
         <ul class="nav pull-right">
       <li>{{link_to('/logout','Logout')}}</li>
@@ -47,7 +52,12 @@
 	</div>
 </div>
         
-    <script src="http://code.jquery.com/jquery.js"></script>
+    {{ HTML::script('js/jquery.min.js'); }}
     {{ HTML::script('js/bootstrap.min.js'); }}
+    {{ HTML::script('js/jquery-ui-1.10.3.custom.min.js'); }}
+    
+
+    @yield('scripts')
+
   </body>
 </html>

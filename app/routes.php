@@ -103,4 +103,16 @@ Route::resource('admin/usergroup', 'UserGroupController');
 
 Route::resource('admin/calendar/group', 'CalendarGroupController');
 
+/*----- FULL CALENDAR  ROUTES ------
+* Contains all routes for user functions (e.g login, signup)
+* Also contains the routes for admin user functions (e.g admin/user/create)
+*/
+
+Route::get('admin/calendar', function()
+	{
+		return View::make('admin.calendar.calendar');
+	});
+
+
+
 
