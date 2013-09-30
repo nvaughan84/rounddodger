@@ -34,6 +34,9 @@
 		  <li class="nav-header">User Groups</li>
 		  <li class="">{{link_to('admin/usergroup','View all user groups')}}</li>
 		  <li>{{link_to('admin/usergroup/create','Create user groups')}}</li>
+		  <li class="nav-header">Calendar Group</li>
+		  <li class="">{{link_to('admin/calendar/group','View all calendar groups')}}</li>
+		  <li>{{link_to('admin/calendar/group/create','Create calendar group')}}</li>
 		</ul>
       </div>
       

@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Input;
+
+use Illuminate\Support\Facades\Redirect;
+
 class CalendarGroupController extends \BaseController {
 
 	/**
@@ -20,7 +24,7 @@ class CalendarGroupController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('admin.calendargroups.create');
 	}
 
 	/**
@@ -30,7 +34,29 @@ class CalendarGroupController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$name = Input::get('name');
+		$description = Input::get('description');
+		Input::flash();
+		
+		if($name!='' && $description!='')
+		{
+			$calendargroup = new CalendarGroup();
+			$calendargroup->name = $name;
+			$calendargroup->description = $description;
+			
+			if($calendargroup->save())
+			{
+				return Redirect::to('admin/calendar/group');
+			}
+			else
+			{
+				return Redirect::to('admin/calendar/group/create');
+			}
+		}
+		else
+		{
+			return Redirect::to('admin/calendar/group/create');
+		}
 	}
 
 	/**
