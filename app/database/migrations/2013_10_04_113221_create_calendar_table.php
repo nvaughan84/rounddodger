@@ -18,6 +18,7 @@ class CreateCalendarTable extends Migration {
 			$table->dateTime('start');
 			$table->dateTime('end');
 			$table->smallInteger('allDay')->default(0);
+			$table->integer('group');
 			$table->timestamps();
 		});
 	}

@@ -8,3 +8,10 @@ View::composer('admin.partials.users.widget',function($view)
 	$data = array('active'=>$users);
 	$view->with($data);
 });
+
+View::composer('admin.partials.calendar.addevent',function($view)
+{
+	$groups = CalendarGroup::all();
+	$data = array('groups'=>$groups);
+	$view->with($data);
+});

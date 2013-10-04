@@ -46,6 +46,12 @@
 	  
 	  <div class="span2 bs-docs-sidebar">
         <ul class="nav nav-list">
+        <li class="nav-header">Calendar</li>
+		  <li class="">{{link_to('admin/calendar','View calendar')}}</li>
+		  <li>{{link_to('admin/calendar/event','Create event')}}</li>
+		  <li class="nav-header">Calendar Group</li>
+		  <li class="">{{link_to('admin/calendar/group','View all calendar groups')}}</li>
+		  <li>{{link_to('admin/calendar/group/create','Create calendar group')}}</li>
 		  <li class="nav-header">Users</li>
 		  <li class="">{{link_to('admin/user','View all users')}}</li>
 		  <li>{{link_to('admin/user/create','Create user')}}</li>
@@ -53,9 +59,8 @@
 		  <li class="nav-header">User Groups</li>
 		  <li class="">{{link_to('admin/usergroup','View all user groups')}}</li>
 		  <li>{{link_to('admin/usergroup/create','Create user groups')}}</li>
-		  <li class="nav-header">Calendar Group</li>
-		  <li class="">{{link_to('admin/calendar/group','View all calendar groups')}}</li>
-		  <li>{{link_to('admin/calendar/group/create','Create calendar group')}}</li>
+
+
 		</ul>
       </div>
       
