@@ -5,9 +5,11 @@
 	<div id='calendar'></div>
 
 	<div class='filter'>
-	@foreach($calendargroups as $group)
-		
+	
+	
+	@foreach($calendargroups as $group)		
 		{{Form::checkbox($group->name, $group->id, true, array('class'=>'group'))}} {{$group->name}}<br>
+		<?php $groupArray[$group->id]=$group->name; ?>
 	@endforeach
 </div>
 
@@ -44,15 +46,10 @@
 	 <div id="dialog">
 	  <label>Title:</label>  <input type="text" name="title"><br>
 	  <label>Date:</label>  <input type="text" name="date" class='date'><br>
-	  <label>Calendar:</label>
-	  <select>
-	  <option>Year 7</option>
-	  <option>Year 8</option>
-	  <option>Year 9</option>
-	  <option>Year 10</option>
-	  <option>Year 11</option>
-	  </select><br>
-	  	  <label>Repeat:</label>
+	  <label>From:</label>	
+	  <?php echo Form::select('calendar_group', $groupArray); ?>
+	 <br>
+	  <label>Repeat:</label>
 	  <select>
 	  <option>No repeat</option>
 	  <option>Every Day</option>
@@ -130,7 +127,8 @@
 			},
 			dayClick: function(date, allDay, jsEvent, view )
 			{		
-				$("#create").find('input[name="date"]').val(date);
+				newDate = $.fullCalendar.formatDate(date, 'dd/MM/yyyy');
+				$("#create").find('input[name="date"]').val(newDate);
 				$("#create").dialog({
 						modal: true,
 	                   	title: 'New Event',

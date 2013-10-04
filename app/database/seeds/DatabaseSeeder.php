@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder {
 
 		// $this->call('UserTableSeeder');
 		$this->call('CalendarGroupsTableSeeder');
+		$this->call('CalendarEventsTableSeeder');
 	}
 
 }
@@ -31,6 +32,23 @@ class CalendarGroupsTableSeeder extends Seeder {
 	}
 
 }
+
+class CalendarEventsTableSeeder extends Seeder {
+
+	public function run()
+	{
+		// Uncomment the below to wipe the table clean before populating
+		// DB::table('blogs')->truncate();
+		$start = date('Y-m-d g:i:s',time());
+		$end = date('Y-m-d g:i:s',time());
+		$calendarGroups = array('title'=>'Sports Day', 'description'=>'Year 7 Sports Day','start'=>$start, 'end'=>$end);
+
+		// Uncomment the below to run the seeder
+		DB::table('calendar_events')->insert($calendarGroups);
+	}
+
+}
+
 
 
 /*class UserTableSeeder extends Seeder {
