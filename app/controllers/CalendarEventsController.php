@@ -33,7 +33,25 @@ class CalendarEventsController extends \BaseController {
 		$description = Input::get('description');
 		$start = Input::get('start');
 		$end = Input::get('end');
-		$group = Input::get('group');
+		$group = Input::get('calendar_group');
+		
+		//$start = date('Y-m-d', $start);
+		
+		$calendar_event = new CalendarEvents();
+		$calendar_event->title = $title;
+		$calendar_event->description = $description;
+		$calendar_event->start = $start;
+		$calendar_event->end = $end;
+		$calendar_event->group = $group;
+		
+		echo $title;
+		echo $description;
+		echo $start;
+		echo $end;
+		echo $group;		
+		
+		$calendar_event->save();
+		
 	}
 
 	/**

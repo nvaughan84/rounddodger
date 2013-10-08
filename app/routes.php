@@ -101,6 +101,17 @@ Route::resource('admin/calendar/group', 'CalendarGroupController');
  */
 Route::resource('admin/calendar/event', 'CalendarEventsController');
 
+Route::get('admin/calendar/event/json/{group_id}', function($group_id)
+{
+	$events = CalendarEvents::select('title','start','group')->where('group','=',$group_id)->get();
+	return $events;
+});
+Route::get('admin/calendar/event/json/all', function()
+{
+	$events = CalendarEvents::select('title','start','group')->get();
+	return $events;
+});
+
 /*----- FULL CALENDAR  ROUTES ------
 */
 
