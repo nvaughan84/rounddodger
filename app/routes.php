@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Input;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,17 +101,29 @@ Route::resource('admin/calendar/group', 'CalendarGroupController');
 /*-----CALENDAR EVENTS ROUTES ------
  */
 Route::resource('admin/calendar/event', 'CalendarEventsController');
+Route::post('admin/calendar/events/add', function()
+{
+	$events = new CalendarEvents();
+	$events->description = '';
+	$events->end = Input::get('to');
+	$events->start = Input::get('from');
+	$events->title = Input::get('title');
+	$events->group = Input::get('group');
+	
+	$events->save();
+});
 
 Route::get('admin/calendar/event/json/{group_id}', function($group_id)
 {
 	$events = CalendarEvents::select('title','start','group')->where('group','=',$group_id)->get();
 	return $events;
 });
-Route::get('admin/calendar/event/json/all', function()
+Route::get('admin/calendar/events/json/all', array('as'=>'json-events', function()
 {
-	$events = CalendarEvents::select('title','start','group')->get();
-	return $events;
-});
+	/*$events = CalendarEvents::select('title','start','group')->get();
+	return $events;*/
+	return  '[{"title":"Music Club","start":"2013-10-08 00:00:00","group":"1"}, {"title":"Cricket","start":"2013-10-12 00:00:00","group":"2"}]';
+}));
 
 /*----- FULL CALENDAR  ROUTES ------
 */

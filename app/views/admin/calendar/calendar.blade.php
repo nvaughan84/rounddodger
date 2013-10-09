@@ -1,7 +1,5 @@
 @extends('admin.master')
 
-
-
 @section('content')
 	<div id='calendar'></div>
 
@@ -20,17 +18,13 @@
 	  <form method="POST" action="publish.php">
 	 <div id="dialog">
 	  <label>Title:</label>  <input type="text" name="title"><br>
-	  <label>Date:</label>  <input type="text" name="date" class='date'><br>
-	  <label>Calendar:</label>
-	  <select>
-	  <option>Year 7</option>
-	  <option>Year 8</option>
-	  <option>Year 9</option>
-	  <option>Year 10</option>
-	  <option>Year 11</option>
-	  </select><br>
+	  <label>From:</label>  <input type="text" name="from" class='from'><br>
+	  <label>To:</label>	<input type="text" name="to" class='to'><br>
+	  <label>Group:</label>
+	  <?php echo Form::select('calendar_group', $groupArray); ?>
+	 <br>
 	  <label>Repeat:</label>
-	  <select>
+	 <select>
 	  <option>No repeat</option>
 	  <option>Every Day</option>
 	  <option>Every Week</option>
@@ -45,10 +39,11 @@
 	<div id="create" title="Basic dialog">
 	  <form method="POST" action="publish.php">
 	 <div id="dialog">
-	  <label>Title:</label>  <input type="text" name="title"><br>
-	  <label>Date:</label>  <input type="text" name="date" class='date'><br>
-	  <label>From:</label>	
-	  <?php echo Form::select('calendar_group', $groupArray); ?>
+	  <label>Title:</label>  <input class='title' type="text" name="title"><br>
+	  <label>From:</label>  <input type="text" name="from" class='from'><br>
+	  <label>To:</label>	<input type="text" name="to" class='to'><br>
+	   <label>Group:</label>
+	  <?php echo Form::select('calendar_group', $groupArray, null, array('class'=>'calendar_group')); ?>
 	 <br>
 	  <label>Repeat:</label>
 	  <select>
@@ -57,12 +52,14 @@
 	  <option>Every Week</option>
 	  <option>Every Month</option>
 	  <option>Every Year</option>
-	  </select><br
+	  </select><br>
 	 </div>
 	</form>
 	</div>
 </div>
 @stop
+
+
 
 @section('scripts')
 {{ HTML::script('js/fullcalendar/fullcalendar.min.js'); }}
@@ -70,7 +67,7 @@
 
 	$(document).ready(function() {
 		
-		$('.date').datepicker();
+		$('.from, .to').datepicker({dateFormat:'yy-mm-dd'});
 
 		$(".group").change(function () {
 		    $("#calendar").fullCalendar("renderEvents");
@@ -128,13 +125,45 @@
 			},
 			dayClick: function(date, allDay, jsEvent, view )
 			{		
+				
 				newDate = $.fullCalendar.formatDate(date, 'dd/MM/yyyy');
 				$("#create").find('input[name="date"]').val(newDate);
 				$("#create").dialog({
+					
 						modal: true,
 	                   	title: 'New Event',
 	                  	buttons: {
-	                	   'Create': function(){},
+	                	   'Create': function()
+	                	   {
+		                	   from = $('#create').find('.from').val();
+		                	   to = $('#create').find('.to').val();
+		                	   title = $('#create').find('.title').val();
+		                	   group = $('#create').find('.calendar_group').val();
+
+		                	   console.log(title);
+
+		                	   $.post('http://rounddodger.dev/admin/calendar/events/add', {
+		                		   to:to,
+		                		   from:from,
+		                		   title:title,
+		                		   group:group
+		                		   }, function(data) {
+		                			   
+		                		   })
+		                		   .success(function(data)
+				                		   {
+		                			   			$('#create').dialog('close');
+		                			   			//clear values
+		                			   			from = $('#create').find('.from').val('');
+		         		                	   	to = $('#create').find('.to').val('');
+		         		                	   	title = $('#create').find('.title').val('');
+				                		   })
+		                		   .fail(function()
+				                		   {
+												alert('Error! Event not saved. Please try again');
+				                		   });
+		                		   
+		                	},
 	                	   'Close': function(){
 	                		   $(this).dialog('close')
 	                	   }
@@ -160,7 +189,7 @@
 				}
 
 			},
-			events: 'http://rounddodger.dev/admin/calendar/event/json/1'
+			events: 'http://rounddodger.dev/admin/calendar/events/json/all'
 		});
 		
 	});
